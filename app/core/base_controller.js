@@ -1,15 +1,17 @@
 const { Controller } = require('egg');
 class BaseController extends Controller {
-  success(data) {
+  success(msg, data) {
     this.ctx.body = {
       success: true,
+      msg,
       data,
     };
   }
 
-  fail(data) {
+  fail(msg, data) {
     this.ctx.body = {
       success: false,
+      msg,
       data,
     };
   }

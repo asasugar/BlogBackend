@@ -12,5 +12,10 @@ module.exports = appInfo => {
   // 数据库配置
   config.mysql = mysqlConfig;
 
+  // 跨域配置
+  config.cors = {
+    allowMethods: 'GET,HEAD,PUT,POST,DELETE,PATCH,OPTIONS',
+    credentials: true,
+  };
   return config;
 };

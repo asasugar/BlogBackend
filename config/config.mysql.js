@@ -10,7 +10,7 @@ const mysql = {
     // 密码
     password: '802355',
     // 数据库名
-    database: 'test',
+    database: 'blob',
   },
   // 是否加载到 app 上，默认开启
   app: true,
