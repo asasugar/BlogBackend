@@ -5,10 +5,13 @@
  */
 module.exports = app => {
   const { router, controller } = app;
+  router.post('createPost', '/api/posts', controller.post.create);
+  // 用户
   router.get('/blog/getUser', controller.user.get);
   router.post('/blog/login', controller.user.login);
   router.post('/blog/reg', controller.user.reg);
   router.post('/blog/modifyPassword', controller.user.modifyPassword);
-
-  router.post('createPost', '/api/posts', controller.post.create);
+  // 文章
+  router.get('/blog/getArticleList', controller.article.getArticleList);
+  router.post('/blog/addArticle', controller.article.addArticle);
 };

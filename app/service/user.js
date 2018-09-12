@@ -20,13 +20,13 @@ class UserService extends Service {
     const addUser = this.app.mysql.insert('user', data);
     return addUser;
   }
-  async update(data) {
-    const addUser = this.app.mysql.update('user', data);
-    return addUser;
+  async update(data, options) {
+    const updateUser = this.app.mysql.update('user', data, options);
+    return updateUser;
   }
   async delete(userId) {
-    const addUser = this.app.mysql.delete('user', { userId });
-    return addUser;
+    const deleteUser = this.app.mysql.delete('user', { userId });
+    return deleteUser;
   }
 }
 module.exports = UserService;
