@@ -14,4 +14,5 @@ module.exports = app => {
   // 文章
   router.get('/blog/getArticleList', controller.article.getArticleList);
   router.post('/blog/addArticle', controller.article.addArticle);
+  router.post('/blog/deleteArticle', controller.article.deleteArticle);
 };

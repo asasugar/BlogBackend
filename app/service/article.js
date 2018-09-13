@@ -14,8 +14,8 @@ class ArticleService extends Service {
     const updateArticle = this.app.mysql.update('article', data, options);
     return updateArticle;
   }
-  async delete(Id) {
-    const deleteArticle = this.app.mysql.delete('article', { Id });
+  async delete(articleId) {
+    const deleteArticle = this.app.mysql.delete('article', { articleId });
     return deleteArticle;
   }
 }

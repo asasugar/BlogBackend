@@ -8,30 +8,30 @@ class ArticleController extends Controller {
     this.success('获取文章列表成功', articleList);
   }
 
-  async login() {
-    const { ctx, service } = this;
-    const { account, password } = ctx.request.body;
-
-    if (account && password) {
-      const userInfo = await service.article.find({ account, password });
-
-      if (userInfo.length > 0) this.success('登录成功', userInfo[0]);
-      else this.fail('账号或者密码错误');
-    } else {
-      this.fail('账号或者密码不能为空');
-    }
-  }
-
   async addArticle() {
     const { ctx, service } = this;
     const { title, content, coverImg } = ctx.request.body;
-    console.log(title);
-    const userInfo = await service.article.insert({
-      title,
-      content,
-      coverImg,
-    });
-    if (userInfo.affectedRows === 1) this.success('添加文章成功');
+    if (title && content) {
+      const res = await service.article.insert({
+        title,
+        content,
+        coverImg,
+      });
+      if (res.affectedRows === 1) this.success('添加文章成功');
+    } else {
+      this.fail('标题或者内容不能为空');
+    }
+  }
+
+  async deleteArticle() {
+    const { ctx, service } = this;
+    const { articleId } = ctx.request.body;
+    if (articleId) {
+      const res = await service.article.delete(articleId);
+      if (res.affectedRows === 1) this.success('删除文章成功');
+    } else {
+      this.fail('articleId 不能为空');
+    }
   }
 
   async modifyPassword() {
