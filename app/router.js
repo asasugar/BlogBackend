@@ -15,4 +15,6 @@ module.exports = app => {
   router.get('/blog/getArticleList', controller.article.getArticleList);
   router.post('/blog/addArticle', controller.article.addArticle);
   router.post('/blog/deleteArticle', controller.article.deleteArticle);
+  // 评论
+  router.get('/blog/getCommentList', controller.comment.getCommentList);
 };

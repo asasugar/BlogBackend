@@ -3,7 +3,9 @@
 const Service = require('egg').Service;
 class ArticleService extends Service {
   async find() {
-    const findArticleList = this.app.mysql.select('article');
+    const findArticleList = this.app.mysql.select('article', {
+      orders: [[ 'createTime', 'desc' ]],
+    });
     return findArticleList;
   }
   async insert(data) {

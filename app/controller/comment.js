@@ -1,18 +1,18 @@
 'use strict';
 
 const Controller = require('../core/base_controller');
-class ArticleController extends Controller {
-  async getArticleList() {
-    const { ctx, service } = this;
-    const articleList = await service.article.find();
-    this.success('获取文章列表成功', articleList);
+class CommentController extends Controller {
+  async getCommentList() {
+    const { service } = this;
+    const res = await service.comment.find();
+    this.success('获取评论列表成功', res);
   }
 
   async addArticle() {
     const { ctx, service } = this;
     const { title, content, coverImg } = ctx.request.body;
     if (title && content) {
-      const res = await service.article.insert({
+      const res = await service.comment.insert({
         title,
         content,
         coverImg,
@@ -28,7 +28,7 @@ class ArticleController extends Controller {
     const { ctx, service } = this;
     const { articleId } = ctx.request.body;
     if (articleId) {
-      const res = await service.article.delete(articleId);
+      const res = await service.comment.delete(articleId);
       if (res.affectedRows === 1) this.success('删除文章成功');
     } else {
       this.fail('articleId 不能为空');
@@ -39,13 +39,13 @@ class ArticleController extends Controller {
     const { ctx, service } = this;
     const { account, oldPassword, newPassword } = ctx.request.body;
     if (account && oldPassword && newPassword) {
-      const isExist = await service.article.find({
+      const isExist = await service.comment.find({
         account,
         password: oldPassword,
       });
 
       if (isExist.length > 0) {
-        const userInfo = await service.article.update(
+        const userInfo = await service.comment.update(
           {
             account,
             password: newPassword,
@@ -64,4 +64,4 @@ class ArticleController extends Controller {
   }
 }
 
-module.exports = ArticleController;
+module.exports = CommentController;
