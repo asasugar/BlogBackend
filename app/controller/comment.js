@@ -3,24 +3,31 @@
 const Controller = require('../core/base_controller');
 class CommentController extends Controller {
   async getCommentList() {
-    const { service } = this;
-    const res = await service.comment.find();
+    const { ctx, service } = this;
+    const res = await service.comment.find({
+      articleId: ctx.query.articleId,
+      userId: ctx.query.userId,
+    });
     this.success('获取评论列表成功', res);
   }
 
-  async addArticle() {
+  async addComment() {
     const { ctx, service } = this;
-    const { title, content, coverImg } = ctx.request.body;
-    if (title && content) {
+    const { userId, articleId, content } = ctx.request.body;
+    const userInfo = await service.user.find({ userId });
+    console.log(userInfo);
+    if (content) {
       const res = await service.comment.insert({
-        title,
+        articleId,
         content,
-        coverImg,
+        userId,
+        userName: userInfo.userName,
+        headImg: userInfo.headImg,
         createTime: new Date(),
       });
-      if (res.affectedRows === 1) this.success('添加文章成功');
+      if (res.affectedRows === 1) this.success('添加评论成功');
     } else {
-      this.fail('标题或者内容不能为空');
+      this.fail('评论内容不能为空');
     }
   }
 

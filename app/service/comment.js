@@ -2,10 +2,17 @@
 
 const Service = require('egg').Service;
 class CommentService extends Service {
-  async find() {
-    const res = this.app.mysql.select('comment', {
-      orders: [[ 'createTime', 'desc' ]],
-    });
+  async find({ articleId, userId = '' }) {
+    // const res = this.app.mysql.select('comment', {
+    //   where: {
+    //     articleId,
+    //   },
+    //   orders: [[ 'userId', '=10', 'desc' ], [ 'createTime', 'desc' ]],
+    // });
+    const res = await this.app.mysql.query(
+      'SELECT * FROM  `comment` WHERE articleId = ? ORDER BY userId = ? DESC, createTime DESC',
+      [ articleId, userId ]
+    );
     return res;
   }
   async insert(data) {
