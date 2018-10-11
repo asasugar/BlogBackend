@@ -3,8 +3,11 @@
 const Controller = require('../core/base_controller');
 class ArticleController extends Controller {
   async getArticleList() {
-    const { service } = this;
-    const articleList = await service.article.find();
+    const { ctx, service } = this;
+    const articleList = await service.article.find({
+      pageNo: +ctx.query.pageNo,
+      pageSize: +ctx.query.pageSize,
+    });
     this.success('获取文章列表成功', articleList);
   }
 

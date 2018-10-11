@@ -2,9 +2,22 @@
 
 const Service = require('egg').Service;
 class ArticleService extends Service {
-  async find() {
+  async find({ pageNo = 1, pageSize = 5 }) {
+    pageNo = (pageNo - 1) * pageSize;
     const findArticleList = this.app.mysql.query(
-      'SELECT COUNT(a.articleId) as commentNum,a.* FROM  article AS a LEFT JOIN `comment` as c ON a.articleId=c.articleId GROUP BY a.articleId ORDER BY createTime DESC'
+      `SELECT 
+        COUNT(a.articleId) as commentNum, a.* 
+      FROM  
+        \`article\` AS a 
+      LEFT JOIN \`comment\` as c ON a.articleId = c.articleId 
+      GROUP BY 
+        a.articleId 
+      ORDER BY 
+        createTime DESC
+      LIMIT ?,
+        ?
+      `,
+      [ pageNo, pageSize ]
     );
     return findArticleList;
   }

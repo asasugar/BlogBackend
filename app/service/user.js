@@ -11,7 +11,6 @@ class UserService extends Service {
         password,
       },
     });
-
     if (userId) return findUserById;
     else if (account && password) return findUserByAccountAndPassword;
     return findUserByAccount;

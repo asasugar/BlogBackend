@@ -21,8 +21,6 @@ class CommentController extends Controller {
         articleId,
         content,
         userId,
-        userName: userInfo.userName,
-        headImg: userInfo.headImg,
         createTime: new Date(),
       });
       if (res.affectedRows === 1) this.success('添加评论成功');

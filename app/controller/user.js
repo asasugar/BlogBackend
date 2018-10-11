@@ -27,7 +27,7 @@ class UserController extends Controller {
 
   async reg() {
     const { ctx, service } = this;
-    const { userName, account, password, remark } = ctx.request.body;
+    const { userName, account, password, remark, headImg } = ctx.request.body;
     if (account && password) {
       // 查询账号是否存在
       const isExist = await service.user.find({ account });
@@ -37,6 +37,7 @@ class UserController extends Controller {
           account,
           password,
           remark,
+          headImg,
         });
         if (userInfo.affectedRows === 1) this.success('注册成功');
       } else this.fail('用户已存在');

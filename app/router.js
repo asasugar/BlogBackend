@@ -5,7 +5,6 @@
  */
 module.exports = app => {
   const { router, controller } = app;
-  router.post('createPost', '/api/posts', controller.post.create);
   // 用户
   router.get('/blog/getUser', controller.user.get);
   router.post('/blog/login', controller.user.login);
@@ -18,4 +17,6 @@ module.exports = app => {
   // 评论
   router.get('/blog/getCommentList', controller.comment.getCommentList);
   router.post('/blog/addComment', controller.comment.addComment);
+  // 上传图片到七牛云
+  router.post('/blog/upload', controller.upload.create);
 };
