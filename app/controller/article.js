@@ -5,23 +5,9 @@ class ArticleController extends Controller {
   async getArticleList() {
     const { service } = this;
     const articleList = await service.article.find();
-    const d = await articleList.map(async item => {
-      const commentList = await this.getCommentList(item.articleId);
-      item.number = commentList.length;
-      return item;
-    });
-    console.log(d);
-
     this.success('获取文章列表成功', articleList);
   }
-  async getCommentList(articleId) {
-    const { service } = this;
 
-    const res = await service.comment.find({
-      articleId,
-    });
-    return res;
-  }
   async addArticle() {
     const { ctx, service } = this;
     const { title, content, coverImg } = ctx.request.body;

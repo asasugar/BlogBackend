@@ -3,9 +3,9 @@
 const Service = require('egg').Service;
 class ArticleService extends Service {
   async find() {
-    const findArticleList = this.app.mysql.select('article', {
-      orders: [[ 'createTime', 'desc' ]],
-    });
+    const findArticleList = this.app.mysql.query(
+      'SELECT COUNT(a.articleId) as commentNum,a.* FROM  article AS a LEFT JOIN `comment` as c ON a.articleId=c.articleId GROUP BY a.articleId ORDER BY createTime DESC'
+    );
     return findArticleList;
   }
   async insert(data) {
