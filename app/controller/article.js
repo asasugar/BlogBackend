@@ -3,22 +3,30 @@
 const Controller = require('../core/base_controller');
 class ArticleController extends Controller {
   async getArticleList() {
-    const { ctx, service } = this;
-    const articleList = await service.article.find({
-      pageNo: +ctx.query.pageNo,
-      pageSize: +ctx.query.pageSize,
-    });
+    const { ctx, service, tagName = '' } = this;
+    const articleList = await service.article.find(
+      // tagName,
+      +ctx.query.pageNo,
+      +ctx.query.pageSize
+    );
     this.success('获取文章列表成功', articleList);
+  }
+
+  async getTagList() {
+    const { service } = this;
+    const tagList = await service.article.findTags();
+    this.success('获取标签成功', tagList);
   }
 
   async addArticle() {
     const { ctx, service } = this;
-    const { title, content, coverImg } = ctx.request.body;
+    const { title, content, tagName } = ctx.request.body;
     if (title && content) {
+      if (!tagName) tagName = '未分类';
       const res = await service.article.insert({
         title,
         content,
-        coverImg,
+        tagName,
         createTime: new Date(),
       });
       if (res.affectedRows === 1) this.success('添加文章成功');

@@ -11,6 +11,7 @@ module.exports = app => {
   router.post('/blog/reg', controller.user.reg);
   router.post('/blog/modifyPassword', controller.user.modifyPassword);
   // 文章
+  router.get('/blog/getTagList', controller.article.getTagList);
   router.get('/blog/getArticleList', controller.article.getArticleList);
   router.post('/blog/addArticle', controller.article.addArticle);
   router.post('/blog/deleteArticle', controller.article.deleteArticle);

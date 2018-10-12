@@ -2,11 +2,11 @@
 
 const Service = require('egg').Service;
 class ArticleService extends Service {
-  async find({ pageNo = 1, pageSize = 5 }) {
+  async find(pageNo, pageSize) {
     pageNo = (pageNo - 1) * pageSize;
     const findArticleList = this.app.mysql.query(
       `SELECT 
-        COUNT(a.articleId) as commentNum, a.* 
+        COUNT(a.articleId) as commentNum, a.*
       FROM  
         \`article\` AS a 
       LEFT JOIN \`comment\` as c ON a.articleId = c.articleId 
@@ -20,6 +20,18 @@ class ArticleService extends Service {
       [ pageNo, pageSize ]
     );
     return findArticleList;
+  }
+  async findTags() {
+    const tags = this.app.mysql.query(
+      `SELECT
+        a.tagName
+      FROM
+        article AS a
+      WHERE
+	      a.tagName is not NULL
+      `
+    );
+    return tags;
   }
   async insert(data) {
     const addArticle = this.app.mysql.insert('article', data);
