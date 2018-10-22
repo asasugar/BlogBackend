@@ -3,9 +3,9 @@
 const Controller = require('../core/base_controller');
 class ArticleController extends Controller {
   async getArticleList() {
-    const { ctx, service, tagName = '' } = this;
+    const { ctx, service } = this;
     const articleList = await service.article.find(
-      // tagName,
+      `%${ctx.query.tagName}%`,
       +ctx.query.pageNo,
       +ctx.query.pageSize
     );

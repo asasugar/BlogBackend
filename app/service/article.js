@@ -2,7 +2,7 @@
 
 const Service = require('egg').Service;
 class ArticleService extends Service {
-  async find(pageNo, pageSize) {
+  async find(tagName, pageNo, pageSize) {
     pageNo = (pageNo - 1) * pageSize;
     const findArticleList = this.app.mysql.query(
       `SELECT 
@@ -10,6 +10,8 @@ class ArticleService extends Service {
       FROM  
         \`article\` AS a 
       LEFT JOIN \`comment\` as c ON a.articleId = c.articleId 
+      WHERE 
+        a.tagName LIKE ?
       GROUP BY 
         a.articleId 
       ORDER BY 
@@ -17,7 +19,7 @@ class ArticleService extends Service {
       LIMIT ?,
         ?
       `,
-      [ pageNo, pageSize ]
+      [ tagName, pageNo, pageSize ]
     );
     return findArticleList;
   }
