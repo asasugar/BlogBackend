@@ -17,5 +17,10 @@ module.exports = appInfo => {
     allowMethods: 'GET,HEAD,PUT,POST,DELETE,PATCH,OPTIONS',
     credentials: true,
   };
+
+  config.bodyParser = {
+    formLimit: '1000kb',
+    jsonLimit: '1000kb',
+  }
   return config;
 };
