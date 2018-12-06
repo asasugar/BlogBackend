@@ -2,19 +2,22 @@
 
 const Service = require('egg').Service;
 class CommentService extends Service {
-  async find({ articleId, userId = '' }) {
+  async find({
+    articleId,
+    userId = ''
+  }) {
     const res = await this.app.mysql.query(
       `SELECT
          c.*, u.userName, u.headImg 
         FROM 
-          \`comment\` as c 
-        LEFT JOIN \`user\` as u ON c.userId = u.userId 
+          \`comment\` AS c 
+        LEFT JOIN \`user\` AS u ON c.userId = u.userId 
         WHERE 
           c.articleId = ? 
         ORDER BY 
           c.userId = ? DESC, c.createTime DESC
         `,
-      [ articleId, userId ]
+      [articleId, userId]
     );
     return res;
   }
@@ -27,7 +30,9 @@ class CommentService extends Service {
     return res;
   }
   async delete(articleId) {
-    const res = this.app.mysql.delete('comment', { articleId });
+    const res = this.app.mysql.delete('comment', {
+      articleId
+    });
     return res;
   }
 }

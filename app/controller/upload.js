@@ -25,7 +25,7 @@ function uploadFn(readableStream) {
       String(Date.now()),
       readableStream,
       putExtra,
-      function(respErr, respBody, respInfo) {
+      function (respErr, respBody, respInfo) {
         if (respErr) {
           throw respErr;
         }
@@ -41,7 +41,9 @@ function uploadFn(readableStream) {
 
 class UploadController extends Controller {
   async create() {
-    const { ctx } = this;
+    const {
+      ctx
+    } = this;
     let stream;
     try {
       stream = await ctx.getFileStream();

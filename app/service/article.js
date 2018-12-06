@@ -6,10 +6,10 @@ class ArticleService extends Service {
     pageNo = (pageNo - 1) * pageSize;
     const findArticleList = this.app.mysql.query(
       `SELECT 
-        COUNT(a.articleId) as commentNum, a.*
+        COUNT(c.articleId) AS commentNum, a.*
       FROM  
         \`article\` AS a 
-      LEFT JOIN \`comment\` as c ON a.articleId = c.articleId 
+      LEFT JOIN \`comment\` AS c ON a.articleId = c.articleId 
       WHERE 
         a.tagName LIKE ?
       GROUP BY 
@@ -19,7 +19,7 @@ class ArticleService extends Service {
       LIMIT ?,
         ?
       `,
-      [ tagName, pageNo, pageSize ]
+      [tagName, pageNo, pageSize]
     );
     return findArticleList;
   }
@@ -44,7 +44,9 @@ class ArticleService extends Service {
     return updateArticle;
   }
   async delete(articleId) {
-    const deleteArticle = this.app.mysql.delete('article', { articleId });
+    const deleteArticle = this.app.mysql.delete('article', {
+      articleId
+    });
     return deleteArticle;
   }
 }

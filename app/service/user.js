@@ -2,9 +2,17 @@
 
 const Service = require('egg').Service;
 class UserService extends Service {
-  async find({ userId, account, password }) {
-    const findUserById = this.app.mysql.get('user', { userId });
-    const findUserByAccount = this.app.mysql.get('user', { account });
+  async find({
+    userId,
+    account,
+    password
+  }) {
+    const findUserById = this.app.mysql.get('user', {
+      userId
+    });
+    const findUserByAccount = this.app.mysql.get('user', {
+      account
+    });
     const findUserByAccountAndPassword = this.app.mysql.select('user', {
       where: {
         account,
@@ -24,7 +32,9 @@ class UserService extends Service {
     return updateUser;
   }
   async delete(userId) {
-    const deleteUser = this.app.mysql.delete('user', { userId });
+    const deleteUser = this.app.mysql.delete('user', {
+      userId
+    });
     return deleteUser;
   }
 }
