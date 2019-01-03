@@ -5,7 +5,7 @@ class ArticleService extends Service {
   async find({
     pageNo,
     pageSize,
-    tagName,
+    tagName = '',
   }) {
     pageNo = (pageNo - 1) * pageSize;
     const findArticleList = this.app.mysql.query(
@@ -22,7 +22,7 @@ class ArticleService extends Service {
       LIMIT ?,
         ?
       `,
-      [tagName, pageNo, pageSize]
+      [`%${tagName}%`, pageNo, pageSize]
     );
     return findArticleList;
   }

@@ -10,7 +10,7 @@ class ArticleController extends Controller {
     const articleList = await service.article.find({
       pageNo: +ctx.query.pageNo,
       pageSize: +ctx.query.pageSize,
-      tagName: `%${ctx.query.tagName||''}%`,
+      tagName: ctx.query.tagName
     });
     this.success('获取文章列表成功', articleList);
   }
